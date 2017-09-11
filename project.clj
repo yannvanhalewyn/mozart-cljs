@@ -23,13 +23,15 @@
 
   :cljsbuild {:builds
               [{:id           "dev"
-                :source-paths ["env/dev"]
+                :source-paths ["src" "env/dev"]
                 :figwheel     {:on-jsload "dev.user/on-js-load"}
                 :compiler     {:main                 dev.user
                                :output-to            "resources/public/js/compiled/app.js"
                                :output-dir           "resources/public/js/compiled/out"
                                :asset-path           "js/compiled/out"
+                               :pretty-print         true
                                :source-map-timestamp true
+                               :optimizations        :none
                                :preloads             [devtools.preload]
                                :external-config      {:devtools/config {:features-to-install :all}}}}
 
