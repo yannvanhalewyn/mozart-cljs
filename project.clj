@@ -33,7 +33,7 @@
                                :source-map-timestamp true
                                :optimizations        :none
                                :preloads             [devtools.preload]
-                               :external-config      {:devtools/config {:features-to-install :all}}}}
+                               :external-config      {:devtools/config {:features-to-install [:formatters]}}}}
 
                {:id           "prod"
                 :source-paths ["src"]
