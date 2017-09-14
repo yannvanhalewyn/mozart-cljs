@@ -1,10 +1,10 @@
 # Mozart
 
-Work in progress. A functional wrapper around Web Audio for ClojureScript applications.
+Work in progress. A functional web audio synthesis library using the Web Audio API.
 
 ## Why
 
-Some other wrappers are out there, but the goal of Mozart is to allow graph introspection of the audio nodes. This is achieved by modeling all modules and instruments after connectable nodes and keep a reference to the connection graph, thus allowing easy addition and removal of elements.
+There are some good Web Audio wrappers, but the goal of Mozart is to allow graph introspection of the audio nodes. This is achieved by modeling all modules and instruments after connectable nodes and keep a reference to the connection graph, thus allowing easy addition and removal of elements.
 
 ## Example
 
