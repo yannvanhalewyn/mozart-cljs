@@ -1,5 +1,5 @@
 (ns daw.views
-  (:require [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as rf]))
 
 (def key-classes
   ["key--white"                    ;; C
@@ -15,10 +15,18 @@
    "key--black"                    ;; A#
    "key--white key--white-right"]) ;; B
 
-(defn keyboard [{:keys [notes]}]
+(defn keyboard
+  "Returns a keyboard component. Notes is a vector of MIDI note
+  numbers to display."
+  [{:keys [notes on-note-down on-note-up]}]
   [:ul.keyboard
    (for [note notes]
-     [:li.key {:class (get key-classes (mod note 12))}])])
+     ^{:key note}
+     [:li.key {:class (get key-classes (mod note 12))
+               :on-mouse-down (partial on-note-down note)
+               :on-mouse-up (partial on-note-up note)}])])
 
 (defn main-panel []
-  [keyboard {:notes (range 60 85)}])
+  [keyboard {:notes (range 60 85)
+             :on-note-down #(rf/dispatch [:note-on %])
+             :on-note-up #(rf/dispatch [:note-off %])}])
