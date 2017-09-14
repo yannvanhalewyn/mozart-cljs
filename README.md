@@ -10,7 +10,7 @@ Some other wrappers are out there, but the goal of Mozart is to allow graph intr
 
 The next example will create a sine wave and a square wave, connect both to a vca and connect that vca into the destination (eg: speakers):
 
-``` clojurescript
+``` clojure
 (ns my-ns
   (:require [mozart.audio :as audio]
             [mozart.synth :as synth]))
