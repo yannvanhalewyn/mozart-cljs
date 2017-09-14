@@ -74,6 +74,16 @@
     (set! (.-type osc) type)
     osc))
 
+(defn start
+  "Starts the oscillator"
+  ([osc] (start osc 0))
+  ([osc at] (.start osc at)))
+
+(defn stop
+  "Stops the oscillator"
+  ([osc] (stop osc 0))
+  ([osc at] (.stop osc at)))
+
 (defn gain
   "Returns a connectable gain node."
   ([ctx] (gain ctx 1))

@@ -26,13 +26,13 @@
        (doto (audio/oscillator (:ctx inst) type)
          (audio/connect* (:vca inst))
          (-> .-frequency (.setValueAtTime freq time))
-         (.start time))))))
+         (audio/start time))))))
 
 (defn note-off
   "Stops the vco, returns a new instrument without the vco node."
   ([inst] (note-off inst 0))
   ([inst at]
-   (if-let [vco (:vco inst)] (.stop vco at))
+   (if-let [vco (:vco inst)] (audio/stop vco))
    (dissoc inst :vco)))
 
 (defn play!
