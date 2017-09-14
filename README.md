@@ -1,26 +1,31 @@
-# web-daw
+# Mozart
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+Work in progress. A functional wrapper around Web Audio for ClojureScript applications.
 
-## Development Mode
+## Why
 
-### Run application:
+Some other wrappers are out there, but the goal of Mozart is to allow graph introspection of the audio nodes. This is achieved by modeling all modules and instruments after connectable nodes and keep a reference to the connection graph, thus allowing easy addition and removal of elements.
 
-```
-lein clean
-lein figwheel dev
-```
+## Example
 
-Figwheel will automatically push cljs changes to the browser.
+The next example will create a sine wave and a square wave, connect both to a vca and connect that vca into the destination (eg: speakers):
 
-Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
+``` clojurescript
+(ns my-ns
+  (:require [mozart.audio :as audio]
+            [mozart.synth :as synth]))
 
-## Production Build
+(def ctx (audio/create-context!))
+(def gain (audio/gain ctx))
+(def osc1 (audio/oscillator ctx "sine"))
+(def osc2 (audio/oscillator ctx "square"))
 
+(def graph
+  (audio/connect->> {}
+    [osc1 gain]
+    [osc2 gain]
+    [gain (audio/destination ctx)]))
 
-To compile clojurescript to javascript:
-
-```
-lein clean
-lein cljsbuild once min
+(audio/start osc1)
+(audio/start osc2)
 ```
