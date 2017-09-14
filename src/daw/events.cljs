@@ -3,31 +3,27 @@
             [mozart.audio :as audio]
             [mozart.synth :as synth]))
 
-(defonce ctx (audio/create-context!))
-(def inst (atom (synth/instrument ctx)))
-
-(def graph (audio/connect {} @inst (audio/destination ctx)))
-
-(re-frame/reg-fx
- :note-on
- (fn [note]
-   (swap! inst synth/note-on "sine" (synth/note->freq note))))
-
-(re-frame/reg-fx
- :note-off
- (fn [note] (swap! inst synth/note-off)))
-
 (re-frame/reg-event-db
  :initialize-db
  (fn  [_ _]
-   {}))
+   (let [ctx (audio/create-context!)
+         synth (synth/instrument ctx)]
+     {:ctx ctx
+      :synth synth
+      :audio-graph (audio/connect {} synth (audio/destination ctx))})))
 
-(re-frame/reg-event-fx
+(re-frame/reg-event-db
  :note-on
  (fn [db [_ note]]
-   {:note-on note}))
+   (update db :synth synth/note-on (synth/note->freq note))))
 
-(re-frame/reg-event-fx
+(re-frame/reg-event-db
  :note-off
  (fn [db [_ note]]
-   {:note-off note}))
+   (update db :synth synth/note-off)))
+
+
+(re-frame/reg-event-db
+ :set-wave-type
+ (fn [db [_ type]]
+   (assoc-in db [:synth :wave-type] type)))

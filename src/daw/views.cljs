@@ -15,6 +15,14 @@
    "key--black"                    ;; A#
    "key--white key--white-right"]) ;; B
 
+(defn osc-panel []
+  [:div
+   [:select {:on-change #(rf/dispatch [:set-wave-type (.. % -target -value)])}
+    [:option {:value "sine"} "sine"]
+    [:option {:value "square"} "square"]
+    [:option {:value "saw"} "saw"]
+    [:option {:value "triangle"} "triangle"]]])
+
 (defn keyboard
   "Returns a keyboard component. Notes is a vector of MIDI note
   numbers to display."
@@ -27,6 +35,8 @@
                :on-mouse-up (partial on-note-up note)}])])
 
 (defn main-panel []
-  [keyboard {:notes (range 60 85)
-             :on-note-down #(rf/dispatch [:note-on %])
-             :on-note-up #(rf/dispatch [:note-off %])}])
+  [:div
+   [osc-panel]
+   [keyboard {:notes (range 60 85)
+              :on-note-down #(rf/dispatch [:note-on %])
+              :on-note-up #(rf/dispatch [:note-off %])}]])
