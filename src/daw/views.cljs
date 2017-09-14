@@ -20,17 +20,18 @@
    [:select {:on-change #(rf/dispatch [:set-wave-type (.. % -target -value)])}
     [:option {:value "sine"} "sine"]
     [:option {:value "square"} "square"]
-    [:option {:value "saw"} "saw"]
+    [:option {:value "sawtooth"} "saw"]
     [:option {:value "triangle"} "triangle"]]])
 
 (defn keyboard
   "Returns a keyboard component. Notes is a vector of MIDI note
   numbers to display."
-  [{:keys [notes on-note-down on-note-up]}]
+  [{:keys [notes playing-notes on-note-down on-note-up]}]
   [:ul.keyboard
    (for [note notes]
      ^{:key note}
-     [:li.key {:class (get key-classes (mod note 12))
+     [:li.key {:class (str (get key-classes (mod note 12))
+                        (when (playing-notes note) " active"))
                :on-mouse-down (partial on-note-down note)
                :on-mouse-up (partial on-note-up note)}])])
 
@@ -39,4 +40,5 @@
    [osc-panel]
    [keyboard {:notes (range 60 85)
               :on-note-down #(rf/dispatch [:note-on %])
-              :on-note-up #(rf/dispatch [:note-off %])}]])
+              :on-note-up #(rf/dispatch [:note-off %])
+              :playing-notes @(rf/subscribe [:playing-notes])}]])

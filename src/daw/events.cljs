@@ -13,17 +13,17 @@
       :audio-graph (audio/connect {} synth (audio/destination ctx))})))
 
 (re-frame/reg-event-db
- :note-on
- (fn [db [_ note]]
-   (update db :synth synth/note-on (synth/note->freq note))))
+  :note-on
+  (fn [db [_ note]]
+    (update db :synth synth/note-on note)))
 
 (re-frame/reg-event-db
- :note-off
- (fn [db [_ note]]
-   (update db :synth synth/note-off)))
+  :note-off
+  (fn [db [_ note]]
+    (update db :synth synth/note-off note)))
 
 
 (re-frame/reg-event-db
- :set-wave-type
- (fn [db [_ type]]
-   (assoc-in db [:synth :wave-type] type)))
+  :set-wave-type
+  (fn [db [_ type]]
+    (assoc-in db [:synth :wave-type] type)))
