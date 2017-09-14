@@ -77,12 +77,12 @@
 (defn start
   "Starts the oscillator"
   ([osc] (start osc 0))
-  ([osc at] (.start osc at)))
+  ([osc at] (.start osc at) osc))
 
 (defn stop
   "Stops the oscillator"
   ([osc] (stop osc 0))
-  ([osc at] (.stop osc at)))
+  ([osc at] (.stop osc at) osc))
 
 (defn gain
   "Returns a connectable gain node."

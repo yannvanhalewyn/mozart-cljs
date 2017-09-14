@@ -4,4 +4,4 @@
 (re-frame/reg-sub
   :playing-notes
   (fn [db]
-    (set (-> db :synth :vcos keys))))
+    (set (-> db :synth :voices keys))))
