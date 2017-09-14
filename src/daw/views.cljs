@@ -1,22 +1,24 @@
 (ns daw.views
   (:require [re-frame.core :as re-frame]))
 
-(defn keyboard []
-  [:ul.keyboard
-   [:li.key--white.key]
-   [:li.key--black.key]
-   [:li.key--white.key--white-center.key]
-   [:li.key--black.key]
-   [:li.key--white.key--white-right.key]
+(def key-classes
+  ["key--white"                    ;; C
+   "key--black"                    ;; C#
+   "key--white key--white-center"  ;; D
+   "key--black"                    ;; D#
+   "key--white key--white-right"   ;; E
+   "key--white"                    ;; F
+   "key--black"                    ;; F#
+   "key--white key--white-center"  ;; G
+   "key--black"                    ;; G#
+   "key--white key--white-center"  ;; A
+   "key--black"                    ;; A#
+   "key--white key--white-right"]) ;; B
 
-   [:li.key--white.key]
-   [:li.key--black.key]
-   [:li.key--white.key--white-center.key]
-   [:li.key--black.key]
-   [:li.key--white.key--white-center.key]
-   [:li.key--black.key]
-   [:li.key--white.key--white-right.key]
-   [:li.key--white.key]])
+(defn keyboard [{:keys [notes]}]
+  [:ul.keyboard
+   (for [note notes]
+     [:li.key {:class (get key-classes (mod note 12))}])])
 
 (defn main-panel []
-  [keyboard])
+  [keyboard {:notes (range 60 85)}])
