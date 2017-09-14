@@ -1,4 +1,4 @@
-(ns daw.graph)
+(ns mozart.graph)
 
 (defn- add-node [graph node]
   (if (get graph node)

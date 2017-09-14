@@ -1,7 +1,7 @@
 (ns daw.core
   (:require [reagent.core :as reagent]
             [re-frame.core :as re-frame]
-            [daw.audio]
+            [mozart.audio]
             [daw.events]
             [daw.subs]
             [daw.views :as views]))
