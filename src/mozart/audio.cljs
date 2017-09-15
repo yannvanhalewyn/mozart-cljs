@@ -40,8 +40,8 @@
   "Connects the two nodes internally. Since Web Audio does not allow
   graph introspection, return our own model of the connection graph."
   [graph node1 node2]
-  (connect* node1 node2)
-  (graph/connect graph node1 node2))
+  (as-> (connect* node1 node2) %
+    (graph/connect graph % node2)))
 
 (defn connect->>
   "Takes a collection of connection tuples and connects them together.

@@ -5,3 +5,5 @@
   :playing-notes
   (fn [db]
     (set (-> db :synth :voices keys))))
+
+(re-frame/reg-sub :synth :synth)
