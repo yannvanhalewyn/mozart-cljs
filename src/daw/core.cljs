@@ -29,7 +29,12 @@
    "k" 72
    "o" 73
    "l" 74
-   "p" 75})
+   "p" 75
+   ";" 76
+   "'" 77
+   "]" 78
+   "\\" 79
+   })
 
 (defn add-handler [event handler]
   (.addEventListener js/document event handler))
