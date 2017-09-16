@@ -7,8 +7,18 @@
   :initialize-db
   (fn  [_ _]
     (let [ctx (audio/create-context!)
+          env1 (audio/envelope {:a 0 :d 0 :s 1 :r 1})
+          env2 (audio/envelope {:a 4 :d 0 :s 1 :r 0.1})
+          osc1 (synth/oscillator "sine")
+          osc2 (synth/oscillator "square")
           synth (-> (synth/instrument ctx)
-                  (synth/add-envelope {:a 0.1 :d 0 :s 1 :r 0.2}))]
+                  (synth/add-osc osc1)
+                  (synth/add-osc osc2)
+                  (synth/add-env env1)
+                  (synth/add-env env2))
+          synth (-> synth
+                  (synth/plug (first (:envelopes synth)) (first (:vcos synth)))
+                  (synth/plug (second (:envelopes synth)) (second (:vcos synth))))]
       {:ctx ctx
        :synth synth
        :audio-graph (audio/connect {} synth (audio/destination ctx))})))

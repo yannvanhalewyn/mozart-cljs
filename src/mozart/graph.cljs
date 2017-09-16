@@ -45,3 +45,8 @@
     (if (empty? remaining)
       (connect graph from to)
       (apply connect-> (connect graph from to) (rest nodes)))))
+
+(defn connected?
+  "Finds out wether or not a node is connected to another node in the graph."
+  [graph node1 node2]
+  (some #(= node2 %) (get graph node1)))
